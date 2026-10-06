@@ -8,16 +8,67 @@ Sistema de gerenciamento de conteúdo Drupal customizado para editorial assistid
 - **PHP**: 8.3+
 - **Composer**: 2.10+
 - **Drush**: 13.x
+- **Ambiente Local**: Lando 3.21+ com Docker
 
-## Setup
+## Início Rápido
+
+### Pré-requisitos
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) (v20.10+)
+- [Lando](https://lando.dev/) (v3.21+)
+- [Git](https://git-scm.com/)
+
+### Instalação
 
 ```bash
-# Instalar dependências
-composer install
+# 1. Clone o repositório
+git clone https://github.com/rossettoDev/cms-ai-editorial.git
+cd cms-ai-editorial
 
-# Instalar Drupal (primeira vez)
-cd web
-../vendor/bin/drush site:install --account-name=admin --account-pass=admin -y
+# 2. Configure variáveis de ambiente
+cp .env.example .env
+# Edite .env conforme necessário
+
+# 3. Inicie o ambiente Lando
+lando start
+
+# 4. Instale o Drupal
+lando drush site:install standard \
+  --account-name=admin \
+  --account-pass=admin \
+  --site-name="CMS AI Editorial" \
+  -y
+
+# 5. Acesse o site
+# URL: https://cms-ai-editorial.lndo.site
+# Usuário: admin / Senha: admin
+```
+
+Para instruções detalhadas, consulte [docs/INSTALLATION.md](docs/INSTALLATION.md).
+
+## Comandos Úteis
+
+```bash
+# Iniciar ambiente
+lando start
+
+# Parar ambiente
+lando stop
+
+# Acessar Drush
+lando drush [comando]
+
+# Acessar Composer
+lando composer [comando]
+
+# Exportar configurações
+lando drush config:export -y
+
+# Importar configurações
+lando drush config:import -y
+
+# Limpar cache
+lando drush cache:rebuild
 ```
 
 ## Documentação

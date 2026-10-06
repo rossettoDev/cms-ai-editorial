@@ -1,0 +1,53 @@
+name: cms-ai-editorial
+recipe: drupal11
+config:
+  webroot: web
+  php: '8.3'
+  database: mariadb:10.6
+  composer_version: '2'
+  via: apache:2.4
+  xdebug: false
+
+services:
+  appserver:
+    build_as_root:
+      - apt-get update -y
+      - apt-get install -y mariadb-client
+    overrides:
+      environment:
+        PHP_MEMORY_LIMIT: 512M
+        DRUSH_OPTIONS_URI: "https://cms-ai-editorial.lndo.site"
+        SIMPLETEST_BASE_URL: "https://cms-ai-editorial.lndo.site"
+  database:
+    portforward: true
+    creds:
+      user: drupal
+      password: drupal
+      database: drupal
+
+tooling:
+  drush:
+    service: appserver
+    cmd: /app/vendor/bin/drush
+  composer:
+    service: appserver
+    cmd: composer
+  npm:
+    service: appserver
+  node:
+    service: appserver
+  mysql:
+    service: database
+    cmd: mysql -u drupal -pdrupal drupal
+  db-import:
+    service: database
+    description: Import database dump
+    cmd: /helpers/sql-import.sh
+  db-export:
+    service: :host
+    description: Export database dump
+    cmd: /app/vendor/bin/drush sql:dump --gzip --result-file=/app/backups/dump-$(date +%Y%m%d-%H%M%S).sql
+
+events:
+  post-start:
+    - appserver: cd /app && composer install --prefer-dist --no-interaction
