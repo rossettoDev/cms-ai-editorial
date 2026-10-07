@@ -5,9 +5,22 @@
 # follows official upstream conventions:
 # https://www.drupal.org/docs/develop/using-composer
 
+# CMS AI Editorial - Environment and local settings
+/.env
+!/.env.example
+/web/sites/default/settings.local.php
+!/web/sites/default/settings.local.example.php
+/private/*
+!/private/.gitkeep
+!/private/.htaccess
+/backups
+
 # Ignore configuration files that may contain sensitive information
 /web/sites/*/*settings*.php
+!/web/sites/default/settings.php
+!/web/sites/default/settings.local.example.php
 /web/sites/*/*services*.yml
+!/web/sites/development.services.yml
 
 # Ignore paths that may contain user-generated content
 /web/sites/*/files

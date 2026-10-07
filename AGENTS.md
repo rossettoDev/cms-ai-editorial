@@ -11,6 +11,8 @@
 - **Gerenciamento de dependências**: Composer 2.x
 - **CLI**: Drush 13.x (compatível com Drupal 11)
 - **Versionamento**: Git (GitHub)
+- **Ambiente Local**: Lando 3.21+ com Docker (PHP 8.3, Apache 2.4, MariaDB 10.6)
+- **Gerenciamento de Variáveis**: vlucas/phpdotenv
 
 ## Estrutura do Projeto
 
@@ -18,6 +20,9 @@
 /
 ├── composer.json          # Dependências do projeto
 ├── composer.lock          # Lock de versões (versionado)
+├── .lando.yml             # Configuração do ambiente Lando
+├── .env.example           # Template de variáveis de ambiente (versionado)
+├── .env                   # Variáveis de ambiente (NÃO versionado)
 ├── web/                   # Webroot do Drupal
 │   ├── core/              # Core do Drupal (não versionado)
 │   ├── modules/
@@ -28,13 +33,20 @@
 │   │   ├── contrib/       # Temas contrib (não versionados)
 │   │   └── custom/        # Temas customizados (versionados)
 │   └── sites/
-│       └── default/
-│           └── settings.php
+│       ├── default/
+│       │   ├── settings.php              # Configuração principal (versionado)
+│       │   ├── settings.local.example.php # Template local (versionado)
+│       │   └── settings.local.php        # Configuração local (NÃO versionado)
+│       └── development.services.yml      # Serviços de dev (versionado)
 ├── vendor/                # Dependências Composer (não versionado)
 ├── drush/                 # Configurações do Drush
 ├── config/                # Exportação de configurações Drupal
+│   └── sync/              # Diretório de sync de configurações (versionado)
+├── private/               # Arquivos privados Drupal (não versionado, protegido)
+├── backups/               # Backups de banco (não versionado)
 └── docs/                  # Documentação do projeto
-    └── implementation-plan.md
+    ├── implementation-plan.md
+    └── INSTALLATION.md
 ```
 
 ## Padrões de Desenvolvimento
@@ -56,6 +68,8 @@
 - Usar Configuration Management do Drupal (`config/sync/`)
 - Exportar configurações com `drush config:export`
 - Importar com `drush config:import`
+- Usar .env para variáveis de ambiente (nunca versionar .env, apenas .env.example)
+- settings.local.php para overrides locais (nunca versionar)
 
 ### Git e Branches
 
@@ -66,36 +80,70 @@
 
 ## Comandos Úteis
 
-### Setup Inicial
+### Setup Inicial (Lando)
+
+```bash
+# Iniciar ambiente Lando
+lando start
+
+# Instalar Drupal (primeira vez)
+lando drush site:install standard \
+  --account-name=admin \
+  --account-pass=admin \
+  --site-name="CMS AI Editorial" \
+  -y
+
+# Limpar cache
+lando drush cache:rebuild
+```
+
+### Desenvolvimento (Lando)
+
+```bash
+# Adicionar módulo contrib
+lando composer require drupal/[module_name]
+
+# Atualizar dependências
+lando composer update
+
+# Exportar configurações
+lando drush config:export -y
+
+# Importar configurações
+lando drush config:import -y
+
+# Verificar status do sistema
+lando drush status
+
+# Acessar shell do container
+lando ssh
+
+# Acessar MySQL
+lando mysql
+
+# Exportar banco de dados
+lando db-export
+
+# Importar banco de dados
+lando db-import arquivo.sql.gz
+```
+
+### Setup Sem Lando (CI/CD, Cloud Agents)
 
 ```bash
 # Instalar dependências
 composer install
 
-# Instalar Drupal (primeira vez)
-drush site:install --account-name=admin --account-pass=admin
+# Instalar Drupal com SQLite (para testes)
+cd web
+../vendor/bin/drush site:install standard \
+  --db-url=sqlite://sites/default/files/.ht.sqlite \
+  --account-name=admin \
+  --account-pass=admin \
+  -y
 
 # Limpar cache
-drush cache:rebuild
-```
-
-### Desenvolvimento
-
-```bash
-# Adicionar módulo contrib
-composer require drupal/[module_name]
-
-# Atualizar dependências
-composer update
-
-# Exportar configurações
-drush config:export
-
-# Importar configurações
-drush config:import
-
-# Verificar status do sistema
-drush status
+../vendor/bin/drush cache:rebuild
 ```
 
 ## Decisões Arquiteturais
@@ -149,6 +197,15 @@ Status: ✅ Implementado
 - [x] T01.2 Confirmar matriz de compatibilidade e inicializar Composer
 - [x] T01.3 Configurar .gitignore e estrutura web/modules/custom/cms_ai_editorial
 - [x] T01.4 Criar docs/implementation-plan.md
+
+### US02 — Executar e instalar o ambiente local [P0]
+
+Status: ✅ Implementado
+
+- [x] T02.1 Criar .lando.yml e settings locais
+- [x] T02.2 Definir diretório de configuração e mecanismo de variáveis/segredos
+- [x] T02.3 Criar procedimento de instalação e exportar configuração ao longo do projeto
+- [x] T02.4 Validar reinstalação limpa (validação final após US03, US04, US14)
 
 ## Troubleshooting
 
