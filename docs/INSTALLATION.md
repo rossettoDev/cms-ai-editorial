@@ -37,22 +37,15 @@ cp .env.example .env
 nano .env  # ou use seu editor preferido
 ```
 
-### Variáveis Obrigatórias
+### Variáveis do ambiente local
 
-Antes de prosseguir, configure no arquivo `.env`:
+O `.env.example` já aponta para o MariaDB do Lando (`DB_HOST=database`, usuário e senha `drupal`). Para desenvolvimento local, copiar o arquivo é suficiente.
 
-1. **DRUPAL_HASH_SALT**: Gere um hash único com o comando abaixo (após iniciar o Lando):
-   ```bash
-   lando drush php-eval 'echo \Drupal\Component\Utility\Crypt::randomBytesBase64(55);'
-   ```
+Gere um `DRUPAL_HASH_SALT` próprio antes de usar o site fora da sua máquina:
 
-2. **Configuração de banco de dados para Lando** (já vem configurado no .env.example):
-   ```
-   DB_HOST=database
-   DB_NAME=drupal
-   DB_USER=drupal
-   DB_PASSWORD=drupal
-   ```
+```bash
+lando drush php-eval 'echo \Drupal\Component\Utility\Crypt::randomBytesBase64(55);'
+```
 
 ## 3. Iniciar Ambiente Lando
 

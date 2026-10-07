@@ -16,10 +16,28 @@
 $dotenv_path = $app_root . '/../';
 if (file_exists($dotenv_path . '.env')) {
   if (class_exists('\Dotenv\Dotenv')) {
-    $dotenv = \Dotenv\Dotenv::createImmutable($dotenv_path);
+    // createUnsafeImmutable also populates getenv(), which this file reads.
+    // createImmutable (v5) only fills $_ENV and $_SERVER.
+    $dotenv = \Dotenv\Dotenv::createUnsafeImmutable($dotenv_path);
     $dotenv->safeLoad();
   }
 }
+
+/**
+ * Reads an environment variable from $_ENV, $_SERVER, or getenv().
+ */
+$cms_ai_env = static function (string $name, ?string $default = NULL): ?string {
+  foreach ([$_ENV, $_SERVER] as $source) {
+    if (isset($source[$name]) && is_string($source[$name]) && $source[$name] !== '') {
+      return $source[$name];
+    }
+  }
+  $value = getenv($name);
+  if (is_string($value) && $value !== '') {
+    return $value;
+  }
+  return $default;
+};
 
 /**
  * Location of the site configuration files.
@@ -34,9 +52,7 @@ $settings['config_sync_directory'] = '../config/sync';
  * Carregado da variável de ambiente DRUPAL_HASH_SALT.
  * IMPORTANTE: Gere um valor único para produção!
  */
-if ($hash_salt = getenv('DRUPAL_HASH_SALT')) {
-  $settings['hash_salt'] = $hash_salt;
-}
+$settings['hash_salt'] = $cms_ai_env('DRUPAL_HASH_SALT', 'cms-ai-editorial-local-dev-salt');
 
 /**
  * Database configuration.
@@ -44,7 +60,7 @@ if ($hash_salt = getenv('DRUPAL_HASH_SALT')) {
  * Configuração do banco de dados a partir de variáveis de ambiente.
  * Suporta connection string completa (DB_URL) ou parâmetros individuais.
  */
-if ($db_url = getenv('DB_URL')) {
+if ($db_url = $cms_ai_env('DB_URL')) {
   // Connection string completa (ex: mysql://user:pass@host:port/database)
   $databases['default']['default'] = [
     'database' => '',
@@ -67,12 +83,12 @@ if ($db_url = getenv('DB_URL')) {
 } else {
   // Parâmetros individuais
   $databases['default']['default'] = [
-    'database' => getenv('DB_NAME') ?: 'drupal',
-    'username' => getenv('DB_USER') ?: 'drupal',
-    'password' => getenv('DB_PASSWORD') ?: 'drupal',
-    'host' => getenv('DB_HOST') ?: 'localhost',
-    'port' => getenv('DB_PORT') ?: '3306',
-    'driver' => getenv('DB_DRIVER') ?: 'mysql',
+    'database' => $cms_ai_env('DB_NAME', 'drupal'),
+    'username' => $cms_ai_env('DB_USER', 'drupal'),
+    'password' => $cms_ai_env('DB_PASSWORD', 'drupal'),
+    'host' => $cms_ai_env('DB_HOST', 'database'),
+    'port' => $cms_ai_env('DB_PORT', '3306'),
+    'driver' => $cms_ai_env('DB_DRIVER', 'mysql'),
     'prefix' => '',
     'collation' => 'utf8mb4_general_ci',
   ];
@@ -84,11 +100,7 @@ if ($db_url = getenv('DB_URL')) {
  * Diretório para arquivos privados (não acessíveis via web).
  * Por padrão, ../private (um nível acima do webroot).
  */
-if ($private_path = getenv('PRIVATE_FILES_PATH')) {
-  $settings['file_private_path'] = $private_path;
-} else {
-  $settings['file_private_path'] = '../private';
-}
+$settings['file_private_path'] = $cms_ai_env('PRIVATE_FILES_PATH', '../private');
 
 /**
  * Trusted host security setting.
@@ -96,7 +108,7 @@ if ($private_path = getenv('PRIVATE_FILES_PATH')) {
  * Proteção contra HTTP Host header attacks.
  * Configure os padrões de host confiáveis via TRUSTED_HOST_PATTERNS.
  */
-if ($trusted_hosts = getenv('TRUSTED_HOST_PATTERNS')) {
+if ($trusted_hosts = $cms_ai_env('TRUSTED_HOST_PATTERNS')) {
   $settings['trusted_host_patterns'] = explode('|', $trusted_hosts);
 } else {
   // Padrões padrão para ambiente local Lando
@@ -112,7 +124,7 @@ if ($trusted_hosts = getenv('TRUSTED_HOST_PATTERNS')) {
  *
  * Define configurações específicas baseadas no ambiente (local, dev, staging, prod).
  */
-$environment = getenv('ENVIRONMENT') ?: 'local';
+$environment = $cms_ai_env('ENVIRONMENT', 'local');
 
 // Configurações para ambiente de desenvolvimento
 if ($environment === 'local' || $environment === 'development') {
