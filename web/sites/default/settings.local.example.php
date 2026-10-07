@@ -14,10 +14,10 @@
 /**
  * Assertions.
  *
- * Habilitar assertions do PHP para debugging.
+ * No Drupal 11 as assertions ficam no php.ini (zend.assertions=1 em
+ * desenvolvimento). assert_options() e Drupal\Component\Assertion\Handle
+ * foram removidos.
  */
-assert_options(ASSERT_ACTIVE, TRUE);
-\Drupal\Component\Assertion\Handle::register();
 
 /**
  * Show all error messages, with backtrace information.
