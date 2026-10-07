@@ -13,6 +13,11 @@
 - **Versionamento**: Git (GitHub)
 - **Ambiente Local**: Lando 3.21+ com Docker (PHP 8.3, Apache 2.4, MariaDB 10.6)
 - **Gerenciamento de Variáveis**: vlucas/phpdotenv
+- **Módulos Contrib**:
+  - Pathauto (^1.15) - Geração automática de alias únicos
+  - Metatag (^2.2) - Gerenciamento de meta tags SEO
+  - Token (^1.17) - Sistema de substituição de tokens
+  - CTools (^4.1) - Ferramentas de construção de interfaces
 
 ## Estrutura do Projeto
 
@@ -206,6 +211,23 @@ Status: ✅ Implementado
 - [x] T02.2 Definir diretório de configuração e mecanismo de variáveis/segredos
 - [x] T02.3 Criar procedimento de instalação e exportar configuração ao longo do projeto
 - [x] T02.4 Validar reinstalação limpa (validação final após US03, US04, US14)
+
+### US03 — Modelar artigos e metadados editoriais [P0]
+
+Status: ✅ Implementado (PR #26)
+
+- [x] T03.1 Criar tipo, campos, vocabulário e displays
+- [x] T03.2 Definir formatos permitidos e limites dos campos
+- [x] T03.3 Escolher mecanismo de alias e metadados compatível, documentando dependências
+- [x] T03.4 Exportar configuração e verificar edição manual
+
+**Implementação:**
+- Tipo de conteúdo `editorial_article` com título, resumo, corpo, tags, meta título, meta descrição e referências
+- Revisões habilitadas por padrão
+- Pathauto (^1.15) para alias únicos e validados
+- Metatag (^2.2) para SEO e Open Graph
+- Configuração exportada para `config/sync/`
+- Documentação em `docs/us03-decisoes-implementacao.md`
 
 ## Troubleshooting
 
