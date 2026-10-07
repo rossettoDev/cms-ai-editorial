@@ -1,0 +1,26 @@
+uuid: d9b181a6-14db-4e7a-b493-d4a4f666baa5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.editorial_article
+  module:
+    - text
+id: node.editorial_article.body
+field_name: body
+entity_type: node
+bundle: editorial_article
+label: Corpo
+description: 'Corpo completo do artigo editorial.'
+required: true
+translatable: true
+default_value:
+  -
+    format: basic_html
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

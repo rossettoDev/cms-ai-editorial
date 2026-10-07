@@ -1,0 +1,22 @@
+uuid: b536e947-3614-45c1-a88d-4f56f62ad723
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_references
+    - node.type.editorial_article
+  module:
+    - text
+id: node.editorial_article.field_references
+field_name: field_references
+entity_type: node
+bundle: editorial_article
+label: 'Referências de Origem'
+description: 'URLs ou citações das fontes consultadas para este artigo.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

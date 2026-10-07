@@ -1,0 +1,9 @@
+uuid: cb16f48d-8574-41b4-9f33-ac33979b3ce4
+langcode: en
+status: true
+dependencies: {  }
+name: 'Editorial Tags'
+vid: editorial_tags
+description: 'Tags para categorização de artigos editoriais'
+weight: 0
+new_revision: false

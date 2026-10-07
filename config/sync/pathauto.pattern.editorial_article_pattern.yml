@@ -1,0 +1,23 @@
+uuid: 944a2135-744e-4c15-bbb4-383c416cc2ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.editorial_article
+  module:
+    - node
+id: editorial_article_pattern
+label: 'Artigo Editorial'
+type: 'canonical_entities:node'
+pattern: '/artigo/[node:title]'
+selection_criteria:
+  856800bf-9e68-4ade-99a7-6d4cb776dde9:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      editorial_article: editorial_article
+selection_logic: and
+weight: -5
+relationships: {  }
