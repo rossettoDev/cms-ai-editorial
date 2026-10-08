@@ -118,7 +118,7 @@ lando drush status
 # Acessar shell do container
 lando ssh
 
-# Acessar MySQL
+# Acessar MariaDB
 lando mysql
 
 # Exportar banco de dados
