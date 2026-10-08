@@ -23,12 +23,15 @@ Conforme [documentação oficial do Drupal 11](https://www.drupal.org/docs/getti
 
 - **PHP**: 8.3.0 ou superior (recomendado 8.3.x)
 - **Banco de Dados**:
-  - MySQL 8.0+ / MariaDB 10.6+
+  - MariaDB 10.6+ (versão mínima oficial para Drupal 11, conforme [change record #3444548](https://www.drupal.org/node/3444548))
+  - MySQL 8.0+
   - PostgreSQL 16+
   - SQLite 3.45+
 - **Servidor Web**: Apache 2.4+ ou Nginx 1.18+
 - **Composer**: 2.7.0+
 - **Drush**: 13.x (gerenciado via Composer)
+
+**Nota**: Este projeto usa **MariaDB 10.6** como banco de dados padrão, conforme especificado no `.lando.yml`. MariaDB 10.6 é a versão mínima oficialmente suportada pelo Drupal 11.
 
 ### Template Base
 

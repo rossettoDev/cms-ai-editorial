@@ -65,7 +65,7 @@ lando start
 Após o `lando start`, você verá as URLs disponíveis:
 
 - **Site**: https://cms-ai-editorial.lndo.site
-- **Database**: Use `lando mysql` para acessar o MySQL/MariaDB
+- **Database**: Use `lando mysql` para acessar o MariaDB
 
 ## 4. Instalação do Drupal
 
@@ -182,7 +182,7 @@ lando drush user:login
 ### Banco de Dados
 
 ```bash
-# Acessar MySQL/MariaDB
+# Acessar MariaDB
 lando mysql
 
 # Exportar banco de dados
