@@ -3,3 +3,11 @@ type: module
 description: 'Módulo principal do CMS Editorial assistido por IA.'
 core_version_requirement: ^11
 package: 'Custom'
+dependencies:
+  - drupal:node
+  - drupal:taxonomy
+  - drupal:field
+  - drupal:text
+  - pathauto:pathauto
+  - metatag:metatag
+  - token:token

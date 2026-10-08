@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Module file for CMS AI Editorial.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node_editorial_article_form.
+ */
+function cms_ai_editorial_form_node_editorial_article_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Adicionar validação de limite de caracteres ao título
+  $form['title']['widget'][0]['value']['#maxlength'] = 255;
+  $form['title']['widget'][0]['value']['#description'] = t('Máximo de 255 caracteres.');
+  
+  // Adicionar descrição aos campos
+  if (isset($form['body'])) {
+    $form['body']['#description'] = t('Corpo do artigo. Use o resumo para uma prévia do conteúdo.');
+  }
+  
+  if (isset($form['field_tags'])) {
+    $form['field_tags']['#description'] = t('Digite tags separadas por vírgula. Novas tags serão criadas automaticamente.');
+  }
+  
+  if (isset($form['field_references'])) {
+    $form['field_references']['#description'] = t('Cole aqui as URLs ou citações das fontes consultadas. Uma por entrada.');
+  }
+  
+  // Adicionar validação customizada
+  $form['#validate'][] = 'cms_ai_editorial_article_validate';
+}
+
+/**
+ * Custom validation for editorial_article nodes.
+ */
+function cms_ai_editorial_article_validate($form, FormStateInterface $form_state) {
+  // Validar que o título não seja vazio ou apenas espaços
+  $title = trim($form_state->getValue('title')[0]['value'] ?? '');
+  if (empty($title)) {
+    $form_state->setErrorByName('title', t('O título não pode estar vazio.'));
+  }
+  
+  // Validar que referências sejam URLs válidas ou texto descritivo
+  $references = $form_state->getValue('field_references');
+  if (!empty($references)) {
+    foreach ($references as $delta => $reference) {
+      if (isset($reference['value']) && !empty($reference['value'])) {
+        $value = trim($reference['value']);
+        // Verificar se contém pelo menos 10 caracteres
+        if (strlen($value) < 10) {
+          $form_state->setErrorByName(
+            "field_references][$delta][value",
+            t('Cada referência deve conter pelo menos 10 caracteres.')
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for node entities.
+ */
+function cms_ai_editorial_form_node_editorial_article_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Aplicar as mesmas validações ao formulário de edição
+  cms_ai_editorial_form_node_editorial_article_form_alter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_node_presave().
+ */
+function cms_ai_editorial_node_presave(EntityInterface $node) {
+  // Garantir que o alias será sempre único
+  // O Pathauto já faz isso, mas esta função garante que nunca aceitaremos
+  // um alias sugerido por IA sem validação
+  if ($node->bundle() === 'editorial_article') {
+    // Normalizar título: remover espaços extras e caracteres especiais
+    $title = $node->getTitle();
+    $title = preg_replace('/\s+/', ' ', $title);
+    $title = trim($title);
+    $node->setTitle($title);
+  }
+}

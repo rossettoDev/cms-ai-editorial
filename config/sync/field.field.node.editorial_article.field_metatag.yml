@@ -1,0 +1,21 @@
+uuid: 46c447c5-bec7-4b5f-8b59-754a722365a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_metatag
+    - node.type.editorial_article
+  module:
+    - metatag
+id: node.editorial_article.field_metatag
+field_name: field_metatag
+entity_type: node
+bundle: editorial_article
+label: 'Meta tags'
+description: 'Configurações de SEO: meta título, meta descrição, etc.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag
