@@ -1,0 +1,21 @@
+uuid: e5f6a7b8-c9d0-4e5f-2a3b-4c5d6e7f8a9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_return_justification
+    - node.type.editorial_article
+  module:
+    - text
+id: node.editorial_article.field_return_justification
+field_name: field_return_justification
+entity_type: node
+bundle: editorial_article
+label: 'Justificativa de Devolução'
+description: 'Justificativa fornecida pelo revisor ao devolver o artigo para edição.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

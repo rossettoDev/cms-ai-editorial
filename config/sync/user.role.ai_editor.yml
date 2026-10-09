@@ -1,0 +1,23 @@
+uuid: a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.editorial_article
+    - workflows.workflow.editorial
+  module:
+    - content_moderation
+    - node
+id: ai_editor
+label: 'AI Editor'
+weight: 3
+is_admin: false
+permissions:
+  - 'create editorial_article content'
+  - 'delete own editorial_article content'
+  - 'edit own editorial_article content'
+  - 'view own unpublished editorial_article content'
+  - 'view own unpublished content'
+  - 'access content overview'
+  - 'use editorial transition create_new_draft'
+  - 'use editorial transition submit_for_review'
