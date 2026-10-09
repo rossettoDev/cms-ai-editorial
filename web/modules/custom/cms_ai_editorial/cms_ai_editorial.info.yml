@@ -8,6 +8,8 @@ dependencies:
   - drupal:taxonomy
   - drupal:field
   - drupal:text
+  - drupal:workflows
+  - drupal:content_moderation
   - pathauto:pathauto
   - metatag:metatag
   - token:token

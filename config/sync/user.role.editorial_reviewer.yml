@@ -1,0 +1,25 @@
+uuid: b2c3d4e5-f6a7-4b5c-9d0e-1f2a3b4c5d6e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.editorial_article
+    - workflows.workflow.editorial
+  module:
+    - content_moderation
+    - node
+id: editorial_reviewer
+label: 'Editorial Reviewer'
+weight: 4
+is_admin: false
+permissions:
+  - 'view any unpublished editorial_article content'
+  - 'view any unpublished content'
+  - 'edit any editorial_article content'
+  - 'access content overview'
+  - 'use editorial transition approve_and_publish'
+  - 'use editorial transition return_to_draft'
+  - 'use editorial transition unpublish'
+  - 'use editorial transition create_revision_draft'
+  - 'view all revisions'
+  - 'view editorial_article revisions'

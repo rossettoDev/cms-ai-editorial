@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.editorial_article.body
     - field.field.node.editorial_article.field_metatag
     - field.field.node.editorial_article.field_references
+    - field.field.node.editorial_article.field_return_justification
     - field.field.node.editorial_article.field_tags
     - node.type.editorial_article
   module:
@@ -45,3 +46,4 @@ content:
     region: content
 hidden:
   field_metatag: true
+  field_return_justification: true

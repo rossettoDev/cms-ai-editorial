@@ -1,0 +1,68 @@
+uuid: c3d4e5f6-a7b8-4c5d-0e1f-2a3b4c5d6e7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.editorial_article
+  module:
+    - content_moderation
+id: editorial
+label: Editorial
+type: content_moderation
+type_settings:
+  states:
+    draft:
+      label: Draft
+      published: false
+      default_revision: false
+      weight: -5
+    needs_review:
+      label: 'Needs Review'
+      published: false
+      default_revision: false
+      weight: 0
+    published:
+      label: Published
+      published: true
+      default_revision: true
+      weight: 5
+  transitions:
+    approve_and_publish:
+      label: 'Approve and Publish'
+      from:
+        - needs_review
+      to: published
+      weight: 0
+    create_new_draft:
+      label: 'Create New Draft'
+      from:
+        - draft
+      to: draft
+      weight: 0
+    create_revision_draft:
+      label: 'Create Revision Draft'
+      from:
+        - published
+      to: draft
+      weight: 0
+    return_to_draft:
+      label: 'Return to Draft'
+      from:
+        - needs_review
+      to: draft
+      weight: 0
+    submit_for_review:
+      label: 'Submit for Review'
+      from:
+        - draft
+      to: needs_review
+      weight: 0
+    unpublish:
+      label: Unpublish
+      from:
+        - published
+      to: draft
+      weight: 0
+  entity_types:
+    node:
+      - editorial_article
