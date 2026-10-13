@@ -1,7 +1,10 @@
 uuid: 59be41d0-6f7a-4ba8-9bc6-8875cabd502c
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  enforced:
+    module:
+      - content_moderation
 name: 'Artigo Editorial'
 type: editorial_article
 description: 'Artigos estruturados para revisão de conteúdo e SEO.'
@@ -9,3 +12,11 @@ help: null
 new_revision: true
 preview_mode: 1
 display_submitted: true
+third_party_settings:
+  content_moderation:
+    enabled: true
+    allowed_moderation_states:
+      - draft
+      - needs_review
+      - published
+    default_moderation_state: draft

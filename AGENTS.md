@@ -229,6 +229,26 @@ Status: ✅ Implementado (PR #26)
 - Configuração exportada para `config/sync/`
 - Documentação em `docs/us03-decisoes-implementacao.md`
 
+### US04 — Separar solicitação, revisão e publicação [P0]
+
+Status: ✅ Implementado
+
+- [x] T04.1 Criar workflow, transições, papéis e matriz de acesso
+- [x] T04.2 Definir acesso por autoria e papel nas entidades e rotas
+- [x] T04.3 Implementar justificativa da devolução e verificar autorização no servidor
+- [x] T04.4 Testar revisão pendente sobre artigo já publicado
+
+**Implementação:**
+- Workflow `editorial` com estados: draft, needs_review, published
+- Transições: create_new_draft, submit_for_review, approve_and_publish, return_to_draft, unpublish, create_revision_draft
+- Papéis `ai_editor` e `editorial_reviewer` com permissões específicas
+- Campo `field_return_justification` para devoluções (obrigatório via validação server-side)
+- Controle de acesso via hook_node_access() (editor vê apenas próprios rascunhos)
+- Revisões pendentes não alteram versão publicada
+- Testes funcionais em `web/modules/custom/cms_ai_editorial/tests/src/Functional/`
+- Configuração exportada para `config/sync/`
+- Documentação em `docs/us04-decisoes-implementacao.md`, `docs/us04-matriz-acesso-transicoes.md`, `docs/us04-testes-manuais.md`
+
 ## Troubleshooting
 
 ### Problema: Composer out of memory
