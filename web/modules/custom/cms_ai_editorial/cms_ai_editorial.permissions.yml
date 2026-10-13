@@ -1,0 +1,24 @@
+create briefing request:
+  title: 'Criar solicitação de briefing'
+  description: 'Permite criar novas solicitações de briefing para geração de artigos.'
+
+view own briefing request:
+  title: 'Visualizar próprias solicitações de briefing'
+  description: 'Permite visualizar as próprias solicitações de briefing.'
+
+view any briefing request:
+  title: 'Visualizar qualquer solicitação de briefing'
+  description: 'Permite visualizar todas as solicitações de briefing.'
+
+edit own briefing request:
+  title: 'Editar próprias solicitações de briefing'
+  description: 'Permite editar as próprias solicitações de briefing pendentes.'
+
+delete own briefing request:
+  title: 'Deletar próprias solicitações de briefing'
+  description: 'Permite deletar as próprias solicitações de briefing pendentes ou falhadas.'
+
+administer briefing requests:
+  title: 'Administrar solicitações de briefing'
+  description: 'Controle total sobre todas as solicitações de briefing.'
+  restrict access: true

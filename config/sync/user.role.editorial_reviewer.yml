@@ -6,6 +6,7 @@ dependencies:
     - node.type.editorial_article
     - workflows.workflow.editorial
   module:
+    - cms_ai_editorial
     - content_moderation
     - node
 id: editorial_reviewer
@@ -13,13 +14,14 @@ label: 'Editorial Reviewer'
 weight: 4
 is_admin: false
 permissions:
-  - 'view any unpublished editorial_article content'
-  - 'view any unpublished content'
-  - 'edit any editorial_article content'
   - 'access content overview'
+  - 'edit any editorial_article content'
   - 'use editorial transition approve_and_publish'
+  - 'use editorial transition create_revision_draft'
   - 'use editorial transition return_to_draft'
   - 'use editorial transition unpublish'
-  - 'use editorial transition create_revision_draft'
   - 'view all revisions'
+  - 'view any briefing request'
+  - 'view any unpublished content'
+  - 'view any unpublished editorial_article content'
   - 'view editorial_article revisions'
