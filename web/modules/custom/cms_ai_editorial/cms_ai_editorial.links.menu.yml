@@ -1,0 +1,11 @@
+cms_ai_editorial.briefing_request.add:
+  title: 'Nova Solicitação'
+  route_name: entity.briefing_request.add_form
+  parent: cms_ai_editorial.briefing_request.user_list
+  weight: -10
+
+cms_ai_editorial.briefing_request.user_list:
+  title: 'Minhas Solicitações'
+  route_name: cms_ai_editorial.briefing_request.user_list
+  menu_name: main
+  weight: 10

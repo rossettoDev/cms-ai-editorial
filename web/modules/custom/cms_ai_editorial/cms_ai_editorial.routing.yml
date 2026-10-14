@@ -1,0 +1,47 @@
+cms_ai_editorial.briefing_request.user_list:
+  path: '/briefing-request/my-requests'
+  defaults:
+    _controller: '\Drupal\cms_ai_editorial\Controller\BriefingRequestController::userList'
+    _title: 'Minhas Solicitações'
+  requirements:
+    _permission: 'create briefing request'
+
+cms_ai_editorial.briefing_request.confirmation:
+  path: '/briefing-request/{briefing_request}/confirmation'
+  defaults:
+    _controller: '\Drupal\cms_ai_editorial\Controller\BriefingRequestController::confirmation'
+    _title_callback: '\Drupal\cms_ai_editorial\Controller\BriefingRequestController::confirmationTitle'
+  requirements:
+    _entity_access: 'briefing_request.view'
+  options:
+    parameters:
+      briefing_request:
+        type: entity:briefing_request
+
+entity.briefing_request.canonical:
+  path: '/briefing-request/{briefing_request}'
+  defaults:
+    _entity_view: 'briefing_request.full'
+    _title_callback: '\Drupal\cms_ai_editorial\Controller\BriefingRequestController::confirmationTitle'
+  requirements:
+    _entity_access: 'briefing_request.view'
+  options:
+    parameters:
+      briefing_request:
+        type: entity:briefing_request
+
+entity.briefing_request.add_form:
+  path: '/briefing-request/add'
+  defaults:
+    _entity_form: 'briefing_request.add'
+    _title: 'Nova Solicitação de Briefing'
+  requirements:
+    _entity_create_access: 'briefing_request'
+
+entity.briefing_request.collection:
+  path: '/admin/content/briefing-requests'
+  defaults:
+    _entity_list: 'briefing_request'
+    _title: 'Solicitações de Briefing'
+  requirements:
+    _permission: 'administer briefing requests'

@@ -6,6 +6,7 @@ dependencies:
     - node.type.editorial_article
     - workflows.workflow.editorial
   module:
+    - cms_ai_editorial
     - content_moderation
     - node
 id: ai_editor
@@ -13,11 +14,15 @@ label: 'AI Editor'
 weight: 3
 is_admin: false
 permissions:
-  - 'create editorial_article content'
-  - 'delete own editorial_article content'
-  - 'edit own editorial_article content'
-  - 'view own unpublished editorial_article content'
-  - 'view own unpublished content'
   - 'access content overview'
+  - 'create briefing request'
+  - 'create editorial_article content'
+  - 'delete own briefing request'
+  - 'delete own editorial_article content'
+  - 'edit own briefing request'
+  - 'edit own editorial_article content'
   - 'use editorial transition create_new_draft'
   - 'use editorial transition submit_for_review'
+  - 'view own briefing request'
+  - 'view own unpublished content'
+  - 'view own unpublished editorial_article content'
