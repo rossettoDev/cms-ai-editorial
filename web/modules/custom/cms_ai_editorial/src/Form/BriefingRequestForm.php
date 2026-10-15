@@ -6,6 +6,7 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Link;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -53,7 +54,21 @@ class BriefingRequestForm extends ContentEntityForm {
     // Configurar validação de tamanho máximo para reference_text
     if (isset($form['reference_text'])) {
       $form['reference_text']['widget'][0]['#maxlength'] = 5000;
-      $form['reference_text']['widget'][0]['#description'] = $this->t('Material de referência opcional (máximo 5000 caracteres).');
+      
+      // Adicionar link para importar de URL
+      $import_url = Url::fromRoute('cms_ai_editorial.url_import');
+      $import_link = Link::fromTextAndUrl(
+        $this->t('Importar de URL'),
+        $import_url
+      )->toString();
+      
+      $form['reference_text']['widget'][0]['#description'] = $this->t(
+        'Material de referência opcional (máximo 5000 caracteres). @import_link',
+        ['@import_link' => $import_link]
+      );
+      
+      // Adicionar biblioteca para modal dialog
+      $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
     }
 
     // Configurar validação de tamanho máximo para objective

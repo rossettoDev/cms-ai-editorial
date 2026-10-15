@@ -22,3 +22,20 @@ administer briefing requests:
   title: 'Administrar solicitações de briefing'
   description: 'Controle total sobre todas as solicitações de briefing.'
   restrict access: true
+
+create source imports:
+  title: 'Criar importações de fonte'
+  description: 'Permite importar conteúdo de URLs externas.'
+
+view own source imports:
+  title: 'Visualizar próprias importações de fonte'
+  description: 'Permite visualizar as próprias importações de fonte.'
+
+delete own source imports:
+  title: 'Deletar próprias importações de fonte'
+  description: 'Permite deletar as próprias importações de fonte.'
+
+administer source imports:
+  title: 'Administrar importações de fonte'
+  description: 'Controle total sobre todas as importações de fonte.'
+  restrict access: true

@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the cms_ai_editorial module.
+ */
+
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function cms_ai_editorial_install() {
+  // Conceder permissões aos papéis ai_editor e editorial_reviewer
+  _cms_ai_editorial_grant_default_permissions();
+}
+
+/**
+ * Concede permissões padrão aos papéis do módulo.
+ */
+function _cms_ai_editorial_grant_default_permissions() {
+  // Permissões para ai_editor
+  $ai_editor = Role::load('ai_editor');
+  if ($ai_editor) {
+    $ai_editor->grantPermission('create source imports');
+    $ai_editor->grantPermission('view own source imports');
+    $ai_editor->grantPermission('delete own source imports');
+    $ai_editor->save();
+  }
+
+  // Permissões para editorial_reviewer
+  $editorial_reviewer = Role::load('editorial_reviewer');
+  if ($editorial_reviewer) {
+    $editorial_reviewer->grantPermission('create source imports');
+    $editorial_reviewer->grantPermission('view own source imports');
+    $editorial_reviewer->grantPermission('delete own source imports');
+    $editorial_reviewer->save();
+  }
+}
+
+/**
+ * Implements hook_schema().
+ */
+function cms_ai_editorial_schema() {
+  $schema = [];
+
+  // Tabela para briefing_request já é criada pela entidade
+  // Tabela para source_import já é criada pela entidade
+
+  return $schema;
+}

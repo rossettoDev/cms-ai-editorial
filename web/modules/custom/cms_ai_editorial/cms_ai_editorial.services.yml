@@ -1,0 +1,8 @@
+services:
+  cms_ai_editorial.url_fetch:
+    class: Drupal\cms_ai_editorial\Service\UrlFetchService
+    arguments: ['@http_client_factory', '@logger.factory']
+
+  cms_ai_editorial.html_parser:
+    class: Drupal\cms_ai_editorial\Service\HtmlParserService
+    arguments: ['@logger.factory']

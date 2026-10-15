@@ -222,6 +222,17 @@ class BriefingRequest extends ContentEntityBase {
         'weight' => 8,
       ]);
 
+    // Referência à importação de fonte (opcional)
+    $fields['source_import'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Importação de fonte'))
+      ->setDescription(t('Referência à fonte importada, se houver.'))
+      ->setSetting('target_type', 'source_import')
+      ->setRequired(FALSE)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'weight' => 9,
+      ]);
+
     // Snapshot do briefing (JSON serializado)
     $fields['briefing_snapshot'] = BaseFieldDefinition::create('string_long')
       ->setLabel(t('Snapshot do Briefing'))

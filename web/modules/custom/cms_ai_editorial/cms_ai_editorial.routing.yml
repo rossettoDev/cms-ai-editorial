@@ -45,3 +45,11 @@ entity.briefing_request.collection:
     _title: 'Solicitações de Briefing'
   requirements:
     _permission: 'administer briefing requests'
+
+cms_ai_editorial.url_import:
+  path: '/briefing-request/import-url'
+  defaults:
+    _form: '\Drupal\cms_ai_editorial\Form\UrlImportForm'
+    _title: 'Importar de URL'
+  requirements:
+    _permission: 'create source imports'
